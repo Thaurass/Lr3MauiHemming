@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lr3MauiHemming.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            VerticalOptions="Center">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column = "1" Background="#1f3d7a"/>
+                <Border Grid.Column = "2" Background="#1f3d7a"/>
+                <!--<Border Grid.Column = "2" Background="#152951"/>-->
+
+                <VerticalStackLayout 
+                    Padding="5"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Grid.Column="0">
+                    <Entry
+                        Margin="2"
+                        x:Name="symbol"
+                        Placeholder="Введите символ"
+                        MaxLength="1"/>
+                    <Entry
+                        Margin="2"
+                        x:Name="byte_code"
+                        Placeholder="Двоичный вид"
+                        IsReadOnly="True"/>
+                    <Button
+                        Margin="2"
+                        x:Name="label"
+                        Text="Вычислить"
+                        Clicked="Calculate_Haffman"/>
+                </VerticalStackLayout> 
+                
+                <VerticalStackLayout 
+                    Padding="20"
+                    VerticalOptions="Center"
+                    Grid.Column="1">
+                    <Label
+                        x:Name="G_matrix"
+                        Text=""
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout 
+                    Padding="20"
+                    VerticalOptions="Center"
+                    Grid.Column="2">
+                    <Label
+                        x:Name="H_matrix"
+                        Text=""
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#152951"/>
+                <Border Grid.Column="1" Background="#152951"/>
+
+                <VerticalStackLayout 
+                    Padding="20"
+                    VerticalOptions="Center"
+                    Grid.Column="0">
+
+                    <Label
+                        Text="Закодированное сообщение:"
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                    <Label
+                        x:Name="coded_message"
+                        Text=""
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="Исправленное сообщение:"
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                    <Entry
+                        Margin="2"
+                        x:Name="corrected_code"
+                        IsReadOnly="True"
+                        HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout 
+                    Padding="20"
+                    VerticalOptions="Center"
+                    Grid.Column="1">
+                    <Border Background="#152951"/>
+
+                    <Label
+                        Text="Результат передачи:"
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                    <Label
+                        x:Name="resulting_matrix"
+                        Text=""
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+            
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
