@@ -20,7 +20,8 @@
             window.Height = newHeight;
 
             window.MinimumWidth = 700;
-            window.MaximumHeight = 560;
+            window.MinimumHeight = 300;
+            //window.MaximumHeight = 560;
 
             return window;
         }

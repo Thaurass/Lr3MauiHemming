@@ -1,5 +1,6 @@
 ﻿using static Lr3MauiHemming.MyVector;
 using static Lr3MauiHemming.Matrix;
+using System.Text.RegularExpressions;
 
 namespace Lr3MauiHemming
 {
@@ -124,53 +125,96 @@ namespace Lr3MauiHemming
         void Tb3(string s, MyVector[] byte4)
         {
             Matrix C2 = new Matrix(byte4) * G;
+
             resulting_matrix.Text = "";
             corrected_code.Text = "";
+            uncode_message.Text = "";
+
+            MyVector[] Res = new MyVector[C2.Size];
+            Matrix byte8 = new Matrix(s.Length * 4);
+
+            for (int i = 0; i < C2.Size; i++)
+            {
+                byte8[i] = new MyVector(
+                    C2[i][0],
+                    C2[i][1],
+                    C2[i][2],
+                    C2[i][3],
+                    C2[i][4],
+                    C2[i][5],
+                    C2[i][6],
+                    Sum(C2[i])
+                    );
+            }
+
+            Random r = new Random();
+
             int t = 0;
 
             for (int i = 0; i < s.Length * 4; i++)
             {
-                C2[i] = Transfer(C2[i]);
-                CorrectedCode = C2;
-                int bit_2 = Sum(C2[i]);
-                Matrix Temp = new Matrix(C2[i]);
+                byte8[i] = Transfer(byte8[i]);
+
+                Matrix Temp = new Matrix(byte8[i]);
                 MyVector sindrom = (Temp * T(H))[0];
-                if ((sindrom.ToString() == "000"))
+                int Bit = (int)Sum(new MyVector(byte8[i][0], byte8[i][1], byte8[i][2], byte8[i][3], byte8[i][4], byte8[i][5], byte8[i][6]));
+
+                if (Bit == byte8[i][7] && sindrom.ToString() == "000")
                 {
                     resulting_matrix.Text += "Нету ошибок";
                 }
-                //if (bit_2 == 1 && ((Temp * T(H))[0].ToString() == "000"))
-                //{
-                //    textBox3.Text += "Ошибка в бите четности";
-                //    bit_2 = zero_one(bit_2);
-                //}
-                if (((Temp * T(H))[0].ToString() != "000"))
+                if (Bit != byte8[i][7] && sindrom.ToString() == "000")
+                {
+                    resulting_matrix.Text += "Ошибка в бите четности";
+                    byte8[i][7] = zero_one(byte8[i][7]);
+                }
+                if (Bit == byte8[i][7] && sindrom.ToString() != "000")
+                {
+                    t = find(H, sindrom);
+                    resulting_matrix.Text += $"Более одной ошибки";
+
+                    byte8[i][t] = zero_one(byte8[i][t]);
+                }
+                if (Bit != byte8[i][7] && sindrom.ToString() != "000")
                 {
                     t = find(H, sindrom);
                     resulting_matrix.Text += $"Ошибка в бите номер {t}";
-                    CorrectedCode = C2;
-                    CorrectedCode[i][t] = zero_one(C2[i][t]);
+                    byte8[i][t] = zero_one(byte8[i][t]);
                 }
-                //if (bit_2 == 0 && ((Temp * T(H))[0].ToString() != "000"))
-                //{
-                //    textBox3.Text += "Более одной ошибки";
-                //}
+
+                Res[i] = new MyVector(byte8[i][0], byte8[i][1], byte8[i][2], byte8[i][3]);
                 resulting_matrix.Text += Environment.NewLine;
-                resulting_matrix.Text += (Temp * T(H))[0].PrintVector();
+                resulting_matrix.Text += sindrom.PrintVector();
                 resulting_matrix.Text += Environment.NewLine;
-                resulting_matrix.Text += C2[i].PrintVector();
+                resulting_matrix.Text += byte8[i].PrintVector();
                 resulting_matrix.Text += Environment.NewLine;
 
-                
-                for (int num = 0; num < 16; num++)
-                {
-                    if (CorrectedCode[i].PrintVector()[num] != ' ')
-                    {
-                        corrected_code.Text += CorrectedCode[i].PrintVector()[num];
-                    }
-                }
-                corrected_code.Text += " ";
             }
+
+            corrected_code.Text += new Matrix(Res).ToString();
+            uncode_message.Text += ConvertToHexStringRev(corrected_code.Text);
+        }
+
+        string ConvertToHexStringRev(string s)
+        {
+            string result = "";
+            long t = new long();
+            string t2 = "";
+            int k = 0;
+            for (int i = 0; i < s.Length; i += 4)
+            {
+                k++;
+                t = Convert.ToInt64((s.Substring(i, 4)), 2);
+                t2 += Convert.ToString(t, 16);
+                if (k % 4 == 0)
+                {
+                    result += Convert.ToChar(Regex.Unescape("\\u" + t2));
+                    t2 = "";
+                }
+            }
+
+
+            return result;
         }
 
         int find(Matrix H, MyVector B)
@@ -192,7 +236,7 @@ namespace Lr3MauiHemming
         MyVector Transfer(MyVector A)
         {
             Random r = new Random();
-            int t = r.Next(1, 3);
+            int t = r.Next(1, 10);
             switch (t)
             {
                 case 1:
@@ -200,10 +244,10 @@ namespace Lr3MauiHemming
                     A[temp1] = zero_one(A[temp1]);
                     break;
                 case 2:
-                    //int temp2 = r.Next(0, 7);
-                    //A[temp2] = zero_one(A[temp2]);
-                    //temp2 = r.Next(0, 7);
-                    //A[temp2] = zero_one(A[temp2]);
+                    int temp2 = r.Next(0, 7);
+                    A[temp2] = zero_one(A[temp2]);
+                    temp2 = r.Next(0, 7);
+                    A[temp2] = zero_one(A[temp2]);
                     break;
                 default:
                     break;

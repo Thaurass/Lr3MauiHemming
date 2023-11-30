@@ -27,7 +27,7 @@
                         Margin="2"
                         x:Name="symbol"
                         Placeholder="Введите символ"
-                        MaxLength="1"/>
+                        MaxLength="10"/>
                     <Entry
                         Margin="2"
                         x:Name="byte_code"
@@ -72,6 +72,7 @@
                     <ColumnDefinition Width="6*"/>
                 </Grid.ColumnDefinitions>
 
+
                 <Border Grid.Column="0" Background="#152951"/>
                 <Border Grid.Column="1" Background="#152951"/>
 
@@ -79,20 +80,24 @@
                     Padding="20"
                     VerticalOptions="Center"
                     Grid.Column="0">
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Label
+                                Text="Закодированное сообщение:"
+                                Margin="2"
+                                SemanticProperties.HeadingLevel="Level1"
+                                FontSize="14"
+                                HorizontalOptions="Center" />
+                            <Label
+                                x:Name="coded_message"
+                                Text=""
+                                Margin="2"
+                                SemanticProperties.HeadingLevel="Level1"
+                                FontSize="14"
+                                HorizontalOptions="Center" />
 
-                    <Label
-                        Text="Закодированное сообщение:"
-                        Margin="2"
-                        SemanticProperties.HeadingLevel="Level1"
-                        FontSize="14"
-                        HorizontalOptions="Center" />
-                    <Label
-                        x:Name="coded_message"
-                        Text=""
-                        Margin="2"
-                        SemanticProperties.HeadingLevel="Level1"
-                        FontSize="14"
-                        HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </ScrollView>
 
                     <Label
                         Text="Исправленное сообщение:"
@@ -103,6 +108,18 @@
                     <Entry
                         Margin="2"
                         x:Name="corrected_code"
+                        IsReadOnly="True"
+                        HorizontalOptions="Center"/>
+
+                    <Label
+                        Text="Раскодированное сообщение:"
+                        Margin="2"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="14"
+                        HorizontalOptions="Center" />
+                    <Entry
+                        Margin="2"
+                        x:Name="uncode_message"
                         IsReadOnly="True"
                         HorizontalOptions="Center"/>
                 </VerticalStackLayout>
@@ -119,17 +136,17 @@
                         SemanticProperties.HeadingLevel="Level1"
                         FontSize="14"
                         HorizontalOptions="Center" />
-                    <Label
-                        x:Name="resulting_matrix"
-                        Text=""
-                        Margin="2"
-                        SemanticProperties.HeadingLevel="Level1"
-                        FontSize="14"
-                        HorizontalOptions="Center" />
+                    <ScrollView>
+                        <Label
+                            x:Name="resulting_matrix"
+                            Text=""
+                            Margin="2"
+                            SemanticProperties.HeadingLevel="Level1"
+                            FontSize="14"
+                            HorizontalOptions="Center"/>
+                    </ScrollView>
                 </VerticalStackLayout>
             </Grid>
-            
-
         </VerticalStackLayout>
     </ScrollView>
 
